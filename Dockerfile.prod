@@ -1,0 +1,27 @@
+# Build stage
+#FROM python:3.9-alpine AS django
+FROM ubuntu:latest
+RUN apt update
+RUN apt install python3 -y
+RUN apt install python3-pip -y
+RUN apt install nginx -y
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends tzdata
+WORKDIR /app
+COPY ./requirements.txt .
+RUN pip install -r requirements.txt
+
+COPY . .
+# RUN rm -rf logs
+# RUN mkdir logs
+
+# Install Nginx in the production stage
+
+EXPOSE 8000
+# Copy entrypoint script into the image
+COPY ./entrypoint.sh /
+RUN chmod +x /entrypoint.sh
+
+COPY ./custom_nginx.conf /etc/nginx/sites-available/
+RUN ln -s /etc/nginx/sites-available/custom_nginx.conf /etc/nginx/sites-enabled
+RUN echo "daemon off;" >> /etc/nginx/nginx.conf
+ENTRYPOINT ["/entrypoint.sh"]
