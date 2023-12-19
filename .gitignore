@@ -1,2 +1,9 @@
 *.tfstate
 /.terrform 
+terrform.tfstate.backup
+terrform.tfstate
+infrastructure/.terraform.lock.hcl
+infrastructure/.terraform/
+infrastructure/terraform.tfstate.backup
+*.pyc
+

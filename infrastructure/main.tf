@@ -30,7 +30,7 @@ resource "aws_codebuild_project" "portfolio_project" {
         }
 
         environment_variable {
-            name  = "IMAGE_REPO"
+            name  = "IMAGE_REPO_NAME"
             value = var.image_repo
         }
 
@@ -100,5 +100,10 @@ resource "aws_iam_role_policy_attachment" "ecr_push_attachment" {
 
 resource "aws_iam_role_policy_attachment" "portfolio_project_cloudwatch_attachment" {
   policy_arn = "arn:aws:iam::aws:policy/CloudWatchFullAccessV2"
+  role       = aws_iam_role.portfolio_project_role.name
+}
+
+resource "aws_iam_role_policy_attachment" "portfolio_project_secrets_manager_attachment" {
+  policy_arn = "arn:aws:iam::aws:policy/SecretsManagerReadWrite"
   role       = aws_iam_role.portfolio_project_role.name
 }

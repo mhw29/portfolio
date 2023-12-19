@@ -18,9 +18,9 @@ tail -n 0 -f /app/logs/*.log &
 echo Starting nginx 
 # Start Gunicorn processes
 echo Starting Gunicorn.
-exec gunicorn mwilliamson_portfolio_python.wsgi:application \
-    --name mwilliamson_portfolio_python \
-    --bind unix:mwilliamson_portfolio_python.sock \
+exec gunicorn portfolio.wsgi:application \
+    --name portfolio \
+    --bind unix:portfolio.sock \
     --workers 3 \
     --log-level=info \
     --log-file=/app/logs/gunicorn.log \
