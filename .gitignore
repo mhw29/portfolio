@@ -6,4 +6,6 @@ infrastructure/.terraform.lock.hcl
 infrastructure/.terraform/
 infrastructure/terraform.tfstate.backup
 *.pyc
-
+db.sqlite3
+logs/
+static/

@@ -12,7 +12,12 @@ COPY . .
 
 EXPOSE 8000
 # Copy entrypoint script into the image
-COPY ./entrypoint.sh /
-RUN chmod +x /entrypoint.sh
+#COPY ./entrypoint.sh /
+#RUN chmod +x /entrypoint.sh
 
-ENTRYPOINT ["/entrypoint.sh"]
+#ENTRYPOINT ["/entrypoint.sh"]
+
+RUN python3 manage.py collectstatic --clear --noinput # clearstatic files
+RUN python3 manage.py collectstatic --noinput  # collect static files
+
+CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "portfolio.wsgi"]
