@@ -9,7 +9,7 @@ phases:
       - echo Logging in to Amazon ECR...
       - docker login --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASS
       - aws ecr get-login-password --region $AWS_DEFAULT_REGION | docker login --username AWS --password-stdin $AWS_ACCOUNT_ID.dkr.ecr.$AWS_DEFAULT_REGION.amazonaws.com
-      - echo "Webhook Head Ref: $CODEBUILD_WEBHOOK_HEAD_REF"
+      #- echo "Webhook Head Ref: $CODEBUILD_WEBHOOK_HEAD_REF"
       - 'if echo "$CODEBUILD_WEBHOOK_HEAD_REF" | grep -q "refs/tags/"; then export IMAGE_TAG=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | sed "s|refs/tags/||"); else echo "No tag found, using default"; export IMAGE_TAG="latest"; fi'
       - echo "Image tag determined to be $IMAGE_TAG"
   build:
