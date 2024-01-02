@@ -19,9 +19,9 @@ phases:
       - echo "Image tag determined to be $IMAGE_TAG"
       - echo $CODEBUILD_SOURCE_VERSION
       - TAG=$(echo $CODEBUILD_SOURCE_VERSION | sed 's/^refs\/tags\///')
-      - echo "Extracted tag: $TAG"
+      - echo "Extracted tag - $TAG"
       - if [ -z "$TAG" ]; then TAG="latest"; fi
-      - echo "Final tag for Docker image: $TAG"
+      - echo "Final tag for Docker image - $TAG"
   build:
     commands:
       - echo Build started on `date`
