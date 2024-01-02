@@ -17,6 +17,11 @@ phases:
       - if echo "$CODEBUILD_WEBHOOK_TRIGGER" | grep -q "tag/"; then export IMAGE_TAG=$(echo $CODEBUILD_WEBHOOK_TRIGGER | sed "s|tag/||"); else echo "No tag found, using default"; export IMAGE_TAG="latest"; fi
       - 'if echo "$CODEBUILD_WEBHOOK_HEAD_REF" | grep -q "refs/tags/"; then export IMAGE_TAG=$(echo $CODEBUILD_WEBHOOK_HEAD_REF | sed "s|refs/tags/||"); else echo "No tag found, using default"; export IMAGE_TAG="latest"; fi'
       - echo "Image tag determined to be $IMAGE_TAG"
+      - echo $CODEBUILD_SOURCE_VERSION
+      - TAG=$(echo $CODEBUILD_SOURCE_VERSION | sed 's/^refs\/tags\///')
+      - echo "Extracted tag: $TAG"
+      - if [ -z "$TAG" ]; then TAG="latest"; fi
+      - echo "Final tag for Docker image: $TAG"
   build:
     commands:
       - echo Build started on `date`
